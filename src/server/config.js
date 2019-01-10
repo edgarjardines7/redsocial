@@ -20,11 +20,23 @@ module.exports = app => {
   app.set('view engine', '.hbs');
 
   // middelwares
+  /* Morgan es básicamente un registrador , 
+  en cualquier solicitud que se realice,
+   genera registros automáticamente
+   
+   ejemplo 
+   GET / 304 2.984 ms - -
+   */
   app.use(morgan('dev'));
+  /** Multer permite la subida de archivos a nuestro servidor */
   app.use(multer({
     desr: path.join(__dirname, '../public/upload/temp')
   }).single('image'));
+
   app.use(express.urlencoded({
+    /**Esta opciñon permite elegir entre analizar los datos codificados
+     * en URL con la biblioteca de cadenas de consulta (cuando es falso)
+     */
     extendend: false
   }));
   app.use(express.json());
@@ -41,5 +53,6 @@ module.exports = app => {
     app.use(errorHandler);
   }
 
+  
   return app;
 }
