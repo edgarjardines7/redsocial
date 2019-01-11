@@ -30,11 +30,11 @@ module.exports = app => {
   app.use(morgan('dev'));
   /** Multer permite la subida de archivos a nuestro servidor */
   app.use(multer({
-    desr: path.join(__dirname, '../public/upload/temp')
+    dest: path.join(__dirname, '../public/upload/temp')
   }).single('image'));
 
   app.use(express.urlencoded({
-    /**Esta opciñon permite elegir entre analizar los datos codificados
+    /**Esta opción permite elegir entre analizar los datos codificados
      * en URL con la biblioteca de cadenas de consulta (cuando es falso)
      */
     extendend: false
