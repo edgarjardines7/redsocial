@@ -4,8 +4,14 @@ const fs = require('fs-extra');
 const {Image} = require('../models')
 const ctrl = {};
 
-ctrl.index = (req,res) => {
-    res.send('Index page')
+ctrl.index = async (req,res) => {
+    /**
+     * regex -> Expresiones regulares
+     * busca los strings que contengan el valor que le mandé
+     */
+    const image = await Image.findOne({filename: {$regex:req.params.image_id}});
+    console.log(image)
+    res.render('image',{image})
 }
 
 ctrl.create = (req,res) => {
@@ -29,7 +35,7 @@ ctrl.create = (req,res) => {
                 });
                 const imageSaved = await newImage.save();
                 //res.redirect('/images/:image_id')
-                res.send('Works')
+                res.redirect('/images/'+ imgUrl)
             }else{
                 await fs.unlink(imageTempPath);
                 res.status(500).json({error:'Only images are allowed'})
